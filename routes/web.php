@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\FetcHTPP;
 use App\Http\Controllers\Qrgenerator;
+use App\Http\Controllers\simulateSubmit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,3 +25,6 @@ Route::post('/Generateqr',function(Request $req){
     ]);
 
 })->name('generate.qr');
+
+Route::get('/formsimulation',[FetcHTPP::class,'formSimulator'])->name('form.simulation');
+Route::post('/submit/midtrans/simulation',[simulateSubmit::class,'sendForm'])->name('midtrans.submit');

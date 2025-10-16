@@ -1,8 +1,8 @@
 <div class="container d-flex flex-column align-items-center justify-content-center p-4 rounded-4 shadow-sm bg-white"
      style="max-width:50vw; margin:auto; margin-top:60px;">
 
-    <div class="title fs-5 fw-semibold text-dark mb-3 text-center">
-        Pembayaran melalui {{ $type }}
+    <div class="title fs-5 fw-semibold text-dark mb-3 text-center ">
+        Pembayaran melalui <span id="tipe-pembayaran">{{ $type }} </span>
     </div>
 
     <img src="{{ $src }}" alt="QRcode"

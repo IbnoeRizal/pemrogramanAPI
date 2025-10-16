@@ -35,6 +35,9 @@ class Qrgenerator extends Controller
                 'name' => $req->name,
                 'email' => $req->NIM . "student@unisba.ac",
             ],
+            "qris" => [
+                "acquirer" => "gopay"
+            ]
         ];
 
         try{
