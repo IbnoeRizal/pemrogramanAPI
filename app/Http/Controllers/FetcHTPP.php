@@ -39,6 +39,9 @@ class FetcHTPP extends Controller
         $inputOrig->setAttribute('value', $absAction);
         $form->appendChild($inputOrig);
 
+        // Jika mau ubah semua input yang diperlukan (mis: disabled -> remove), bisa diproses di sini.
+        $htmlHelper->cleanForm($form);
+
         // sisipkan CSRF token (soalnya form nanti submit ke Laravel)
         $csrf = csrf_token();
         $inputCsrf = $dom->createElement('input');
@@ -47,7 +50,6 @@ class FetcHTPP extends Controller
         $inputCsrf->setAttribute('value', $csrf);
         $form->appendChild($inputCsrf);
 
-        // Jika mau ubah semua input yang diperlukan (mis: disabled -> remove), bisa diproses di sini.
 
         // ambil outerHTML dari node form
         $formHtml = $htmlHelper->getOuterHtml($form);
