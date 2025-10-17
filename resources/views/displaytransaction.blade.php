@@ -13,10 +13,12 @@
         @default
     @endswitch
 @endif
-<div id="confirmation"></div>
+<div id="confirmation" class="d-flex flex-column align-items-center justify-content-center"></div>
 <script>
     const route = Object.freeze({
-        form : "{{ route('form.simulation')}}",
+        form : "{{route('form.simulation')}}",
+        poll : "{{route('midtrans.statusNotif')}}",
+        orderID: "{{$OrderId}}"
     });
 </script>
 <script src="{{ asset('js/custom.js') }}"></script>
