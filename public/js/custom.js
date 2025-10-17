@@ -21,12 +21,78 @@ document.addEventListener('DOMContentLoaded',()=>{
         console.warn(`tipe payment salah ${paymentType}`)
         return;
     }
+
+    elem.innerHTML = "<div> Loading ...</div>";
     fetch(route.form)
     .then(x=>x.text())
     .then(x=>{
         const parsed = new DOMParser().parseFromString(x, "text/html");
         elem.replaceChildren(...parsed.body.children);
     })
-    .catch(err => new Notification("Gagal", { body: err.message }));
+    .then(()=>{
+        const form = elem.firstChild;
+        document.getElementById('qrCodeUrl').value = selector;
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // cegah submit normal
+
+            // ambil data form sebagai FormData
+            const formData = new FormData(form);
+
+            const nwelement = document.createElement('span');
+            elem.replaceChildren(nwelement);
+            nwelement.innerText = "Wait...";
+            //console.error(`action = ${form.action}\n method = ${form.method.toUpperCase()}`);
+
+
+            try {
+                const res = await fetch(form.action, {
+                    method: "POST",
+                    body: formData,
+                    headers: {
+                    'X-Requested-With': 'XMLHttpRequest', // optional, agar Laravel tahu ini AJAX
+                    }
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (!res.ok) {
+                    nwelement.style.color = "red";
+                    throw new Error(`Gagal ${res.status}`);
+                }
+
+                nwelement.innerText = data.status || `Sukses (${res.status})`;
+                const x = new Promise((resolve, reject)=>{
+                    let p = () => setTimeout(()=>{
+
+                        fetch(route.poll,{
+                            method : "POST",
+                            body: {
+                                "key" : route.orderID,
+                            },
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                            }
+                        })
+                        .then(res.json())
+                        .then( y => {
+                            if(y.state === "pending") p();
+                            else if(y.state === "settlement") resolve("pembayaran berhasil");
+                            else reject("pembayaran gagal");
+                        })
+                    },3000);
+                    p();
+                })
+
+                nwelement.innerText = await x;
+
+            } catch (err) {
+                console.error('Terjadi error:', err);
+                nwelement.innerText = err;
+
+            }
+        });
+    })
+    .catch(err => alert("Gagal", { body: err.message }));
 
 })
