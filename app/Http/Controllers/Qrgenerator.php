@@ -18,13 +18,6 @@ class Qrgenerator extends Controller
             'harga' => 'required|numeric|min:0'
         ]);
 
-
-        Config::$serverKey = config("midtransAPI.server_key");
-        Config::$clientKey = config("midtransAPI.client_key");
-        Config::$isProduction = config("midtransAPI.is_production");
-        Config::$isSanitized = config("midtransAPI.is_sanitized");
-        Config::$is3ds = config("is3ds");
-
         $params = [
             'payment_type' => 'qris',
             'transaction_details' => [
