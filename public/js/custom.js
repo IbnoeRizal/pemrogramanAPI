@@ -9,28 +9,29 @@ const statusChecker = function (data,resolve,reject) {
 
     const fun = (resolve,reject) => {
 
-        const x = setTimeout(()=>{
-            fetch(route.poll,{
-                method : "POST",
-                body: JSON.stringify({ "key": route.orderID}),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-Requested-With': 'XMLHttpRequest',
-                    'X-CSRF-TOKEN': data.token
-                },
-                credentials: 'same-origin'
-            })
-            .then(res => res.json())
-            .then( y => {
-                if(y.state === "canceled" || y.state ==="expired")
-                    return reject();
-                if(y.state === "settlement")
-                    return resolve();
-                else x();
-            })
-            .catch(err => reject(err))
-
-        },3000);
+        const x = function (){
+            setTimeout(()=>{
+                fetch(route.poll,{
+                    method : "POST",
+                    body: JSON.stringify({ "key": route.orderID}),
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': data.token
+                    },
+                    credentials: 'same-origin'
+                })
+                .then(res => res.json())
+                .then( y => {
+                    if(y.state === "canceled" || y.state ==="expired")
+                        return reject();
+                    if(y.state === "settlement")
+                        return resolve();
+                    else x();
+                })
+                .catch(err => reject(err));
+            },3000);
+        };
     };
 
     return function (){fun(resolve,reject)};
