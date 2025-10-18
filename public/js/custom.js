@@ -56,40 +56,43 @@ document.addEventListener('DOMContentLoaded',()=>{
 
                 const data = await res.json().catch(() => ({}));
 
+                nwelement.innerText = data.status || `(${res.status})`;
+
                 if (!res.ok) {
                     nwelement.style.color = "red";
                     throw new Error(`Gagal ${res.status}`);
                 }
 
-                nwelement.innerText = data.status || `Sukses (${res.status})`;
                 const x = new Promise((resolve, reject)=>{
                     let p = () => setTimeout(()=>{
 
                         fetch(route.poll,{
                             method : "POST",
-                            body: {
-                                "key" : route.orderID,
-                            },
+                            body: JSON.stringify({ "key": route.orderID}),
                             headers: {
+                                'Content-Type': 'application/json',
                                 'X-Requested-With': 'XMLHttpRequest',
-                            }
+                                'X-CSRF-TOKEN': data.token
+                            },
+                            credentials: 'same-origin'
                         })
-                        .then(res.json())
+                        .then(res => res.json())
                         .then( y => {
-                            if(y.state === "pending") p();
-                            else if(y.state === "settlement") resolve("pembayaran berhasil");
-                            else reject("pembayaran gagal");
+                            if(y.state === "canceled" || y.state ==="expired")
+                                return reject("pembayaran gagal");
+                            if(y.state === "settlement")
+                                return resolve("pembayaran berhasil");
+                            else p();
                         })
+                        .catch(err => reject(err));
                     },3000);
                     p();
-                })
+                });
 
                 nwelement.innerText = await x;
 
             } catch (err) {
                 console.error('Terjadi error:', err);
-                nwelement.innerText = err;
-
             }
         });
     })

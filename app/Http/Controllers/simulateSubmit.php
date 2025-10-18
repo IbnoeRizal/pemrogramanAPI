@@ -54,7 +54,7 @@ class simulateSubmit extends Controller
         if($res->failed()) return response(["status" => "can't post to payment simulator"],$res->status());
 
         //berhasil kirim, tunggu lewat webhook
-        return response(["status" => "checking payment status"],200);
+        return response(["status" => "checking payment status", "token" => csrf_token()],200);
 
     }
 }

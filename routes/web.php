@@ -3,7 +3,7 @@
 use App\Http\Controllers\FetcHTPP;
 use App\Http\Controllers\Qrgenerator;
 use App\Http\Controllers\simulateSubmit;
-use App\Http\Controllers\webhookendp;
+use App\Http\Controllers\Webhookendp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Cache;
@@ -20,7 +20,7 @@ Route::post('/Generateqr',function(Request $req){
 
     if (isset($data['expiry_time'])) {
         $expiry = Carbon::parse($data['expiry_time']);
-        $ttl = $expiry->diffInSeconds(Carbon::now());
+        $ttl = Carbon::now()->diffInMinutes($expiry);
 
         Cache::put($data['order_id'], $data['transaction_status'], $ttl);
     }
@@ -38,5 +38,4 @@ Route::post('/Generateqr',function(Request $req){
 
 Route::get('/formsimulation',[FetcHTPP::class,'formSimulator'])->name('form.simulation'); // dapatkan form dari simulator
 Route::post('/submit/midtrans/simulation',[simulateSubmit::class,'sendForm'])->name('midtrans.submit'); //submit url qr ke simulator
-Route::post('/submit/midtrans/notif',[webhookendp::class,'editData'])->name('midtrans.notif'); //notifikasi endpoint
-Route::post('/submit/midtrans/pollstatus',[webhookendp::class,'getData'])->name('midtrans.statusNotif'); //polling untuk user
+Route::post('/submit/midtrans/pollstatus',[Webhookendp::class,'getData'])->name('midtrans.statusNotif'); //polling untuk user
