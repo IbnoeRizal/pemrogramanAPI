@@ -75,7 +75,7 @@ const qrisPayment = function(elem,selector){
         const form = elem.firstChild;
         document.getElementById('qrCodeUrl').value = selector;
 
-        form.addEventListener('submit', async (e) => {
+        form.addEventListener('submit', e => {
             e.preventDefault(); // cegah submit normal
 
 
@@ -104,9 +104,9 @@ const qrisPayment = function(elem,selector){
 //entry point
 document.addEventListener('DOMContentLoaded',()=>{
     const paymentType = document.getElementById('tipe-pembayaran').innerHTML.trim();
-    console.log(paymentType);
+   // console.log(paymentType);
     const selector = document.querySelector(map[paymentType]).getAttribute(inputmap[paymentType]);
-    console.log(inputmap[paymentType]);
+   // console.log(inputmap[paymentType]);
     const elem = document.getElementById('confirmation');
 
     if(!elem){

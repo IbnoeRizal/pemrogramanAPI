@@ -7,5 +7,6 @@ return [
     "merchant_id" => env("MIDTRANS_MERCHANT_ID"),
     "is_sanitized" => env("MIDTRANS_ISSANITIZED",true),
     "is3ds" => env("MIDTRANS_IS3DS",true),
-    "simulator" => "https://simulator.sandbox.midtrans.com/v2/qris/index"
+    "simulator" => "https://simulator.sandbox.midtrans.com/v2/qris/index",
+    "csvname" => env("CSVNAMEFILE","passwordwifi.csv")
 ];
