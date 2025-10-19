@@ -11,7 +11,7 @@ use Illuminate\Support\Carbon;
 
 Route::get('/', function () {
     return view('LOG');
-});
+})->name('login');
 
 Route::post('/Generateqr',function(Request $req){
     $req->merge(['harga' => 2000]);
@@ -34,7 +34,7 @@ Route::post('/Generateqr',function(Request $req){
         'Rp' => $data['gross_amount']?? 0,
         'OrderId' => $data['order_id']?? ""
     ]);
-})->name('generate.qr');
+})->middleware('Ismahasiswa')->name('generate.qr');
 
 Route::get('/formsimulation',[FetcHTPP::class,'formSimulator'])->name('form.simulation'); // dapatkan form dari simulator
 Route::post('/submit/midtrans/simulation',[simulateSubmit::class,'sendForm'])->name('midtrans.submit'); //submit url qr ke simulator

@@ -7,7 +7,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="flex flex-col items-center justify-center h-screen bg-gray-100">
-
+    @if(session('error'))
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">{{ session('error') }}</div>
+    @endif
     {{-- Ikon Wi-Fi di tengah --}}
     <div class="flex flex-col items-center mb-6">
         <svg xmlns="http://www.w3.org/2000/svg"

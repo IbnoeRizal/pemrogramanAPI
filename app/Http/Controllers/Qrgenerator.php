@@ -14,7 +14,7 @@ class Qrgenerator extends Controller
 
         $req->validate([
             'name' => 'required|string|max:50',
-            'NIM' => 'required|numeric|min:0',
+            'NIM' => 'required|string|size:11',
             'harga' => 'required|numeric|min:0'
         ]);
 
