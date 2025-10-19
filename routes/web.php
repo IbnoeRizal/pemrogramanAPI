@@ -32,10 +32,12 @@ Route::post('/Generateqr',function(Request $req){
         'mataUang' => $data['currency']?? null,
         'src' => $data['actions'][0]['url']?? null,
         'Rp' => $data['gross_amount']?? 0,
-        'OrderId' => $data['order_id']?? ""
+        'OrderId' => $data['order_id']?? "",
+        'NIM' => $req->NIM
     ]);
 })->middleware('Ismahasiswa')->name('generate.qr');
 
 Route::get('/formsimulation',[FetcHTPP::class,'formSimulator'])->name('form.simulation'); // dapatkan form dari simulator
 Route::post('/submit/midtrans/simulation',[simulateSubmit::class,'sendForm'])->name('midtrans.submit'); //submit url qr ke simulator
 Route::post('/submit/midtrans/pollstatus',[Webhookendp::class,'getData'])->name('midtrans.statusNotif'); //polling untuk user
+Route::get('/show/passwordwifi', function () {return view('showpass');})->name('get.password');

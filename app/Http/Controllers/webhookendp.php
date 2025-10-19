@@ -33,7 +33,6 @@ class Webhookendp extends Controller
             return "canceled";
         });
 
-        if($value == "settlement") Cache::delete($req->key);
         return response(["state" => $value],200);
     }
 }

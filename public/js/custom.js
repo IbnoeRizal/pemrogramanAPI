@@ -32,10 +32,37 @@ const statusChecker = function (data,resolve,reject) {
                 .catch(err => reject(err));
             },3000);
         };
+        x();
     };
 
     return function (){fun(resolve,reject)};
 
+};
+
+const passwordCheck = async () => {
+    try {
+        const response = await fetch(route.password, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest',
+            },
+            credentials: 'same-origin',
+            body: JSON.stringify({
+                "OrderId": route.orderID,
+                "NIM": route.NIM
+            }),
+        });
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        const redirectUrl = await response.json();
+        console.log(redirectUrl);
+        window.location.href = redirectUrl.redirect;
+
+    } catch (err) {
+        console.error('Fetch gagal:', err);
+    }
 };
 
 const paySimulation = async function(url ,formData, resolve, reject, {nodeStatus = null} = {}){
@@ -83,14 +110,13 @@ const qrisPayment = function(elem,selector){
             elem.replaceChildren(nwelement);
             nwelement.innerText = "Wait...";
 
-            const berhasil = node => node.innerText = "pembayaran berhasil";
             const gagal = node => node.innerHTML = "pembayaran gagal";
 
 
             paySimulation(
                 form.action,
                 new FormData(form),
-                () => berhasil(nwelement),
+                () => passwordCheck(),
                 () => gagal(nwelement),
                 {nodeStatus: nwelement}
             );

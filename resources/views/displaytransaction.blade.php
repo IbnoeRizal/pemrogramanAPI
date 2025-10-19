@@ -18,7 +18,9 @@
     const route = Object.freeze({
         form : "{{route('form.simulation')}}",
         poll : "{{route('midtrans.statusNotif')}}",
-        orderID: "{{$OrderId}}"
+        orderID: "{{$OrderId}}",
+        NIM : "{{$NIM}}",
+        password : "{{route('check.password')}}",
     });
 </script>
 <script src="{{ asset('js/custom.js') }}"></script>

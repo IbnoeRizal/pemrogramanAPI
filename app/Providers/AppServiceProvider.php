@@ -21,9 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // if ($this->app->environment('local') || $this->app->environment('production')) {
-        //     URL::forceScheme('https');
-        // }
+        if ($this->app->environment('local') || $this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
 
         Config::$serverKey = config("midtransAPI.server_key");
         Config::$clientKey = config("midtransAPI.client_key");
