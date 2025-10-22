@@ -32,7 +32,7 @@ jalankan command pada terminal di directory project berada
 - php artisan key:generate
 - php artisan migrate:fresh --seed
 
-jika menggunakan proyek local
+jika menjalankan lokal
 - ganti kode bagian app\Providers\AppServiceProvider.php
    ```php
     if ($this->app->environment('local') || $this->app->environment('production')) {
