@@ -23,7 +23,7 @@ persiapan
     |MIDTRANS_ISPRODUCTION|false|
     |MIDTRANS_ISSANITIZED|true|
     |MIDTRANS_IS3DS|true|
-    |CVSNAMEFILE|path ke file .csv|
+    |CVSNAMEFILE|nama file .csv|
   - buat database dan cantumkan nama database tersebut di file .env
 
 jalankan command pada terminal di directory project berada
