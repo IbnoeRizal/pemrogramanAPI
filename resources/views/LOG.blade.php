@@ -41,7 +41,6 @@
                    placeholder="Nomor Induk Mahasiswa" required>
         </div>
 
-        {{-- harga bisa otomatis di route, jadi tidak perlu input --}}
         <button type="submit"
                 class="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition">
             Beli dengan Qris

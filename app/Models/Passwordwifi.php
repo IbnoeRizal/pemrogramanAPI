@@ -9,6 +9,6 @@ class Passwordwifi extends Model
     protected $table = 'passwordwifi';
     protected $guarded = [
         'nim',
-        'birt_date'
+        'birth_date'
     ];
 }
